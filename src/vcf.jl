@@ -1,38 +1,27 @@
 #!/usr/bin/env julia
 
-module vcf
 import GZip
+#using NGS
 
 # Function for reading input file
-function read(vcfile)
-	function lines(vcfile)
-		if ismatch(r".vcf$", vcfile)
-			f = open(vcfile)
-			lines = readlines(f)
-			close(f)
-		elseif ismatch(r".gz$", vcfile)
-			f = GZip.open(vcfile)
-			lines = readlines(f)
-			close(f)
-		end
-		return lines
+function read(file)
+	if ismatch(r".vcf$", file)
+		f = open(file)
+		lines = readlines(f)
+		println("Successfully read $file file!")
+		close(f)
+	elseif ismatch(r".gz$", file)
+		f = GZip.open(file)
+		lines = readlines(f)
+		println("Successfully read archived $file file!")
+		close(f)
 	end
-	
-	# Function to extract only the vcf record containing lines
-	function records(lines)
-		records = []
-		for ln in lines
-			if ismatch(r"^[\d]|X|Y", ln)
-				push!(record, "$ln")
-			end
-		end
-		return records
-	end
+	return lines
 end
 
-#=
 # Function to extract only the vcf record containing lines
-function record(lines)
+function records(file)
+	lines = read(file)
 	record = []
 	for ln in lines
 		if ismatch(r"^[\d]|X|Y", ln)
@@ -41,34 +30,52 @@ function record(lines)
 	end
 	return record
 end
-=#
-
-# Function for getting Variant Call Format version information
-function version(lines)
-	#if ln 
-	ln = split(lines, "=")
-	version = ln[2]
-	return version
-end
 
 # Function for extracting the header lines
 function header(lines)
-	header = []
-	headlines = lines[1:100]
-	for ln in headlines
+	head = []
+	for ln in lines
 		if ismatch(r"^#", ln)
-			push!(header, "$ln\n")
+			push!(head, "$ln\n")
 		end
 	end
-	return header
+	if sizeof(head) >= 1
+		return head
+	else
+		print("Header information not found in the input .vcf file!\n")
+	end
+end
+
+# Function for getting Variant Call Format version information
+function version(lines)
+	headers = header(lines)
+	if sizeof(headers) < 1
+		print("Header information not found in the input .vcf file!\n")
+	elseif ismatch(r"=VCF", headers[1]) && sizeof(headers) >= 1
+		head = headers[1]
+		ln = split(head, "=")
+		version = ln[2]
+		return version
+	else
+		print("Version information not found in the input .vcf file!\n")
+	end
 end
 
 # Function for extracting INFO provided in header lines
-function infos(header)
-	for ln in header
-		if ismatch(r"^##INFO", ln)
-			print(ln)
+function infos(lines)
+	headers = header(lines)
+	info = []
+	if sizeof(headers) < 1
+		print("Header information not found in the input .vcf file!\n")
+	elseif sizeof(headers) >= 1
+		for ln in headers
+			if ismatch(r"^##INFO", ln)
+				push!(info, "$ln\n")
+			end
 		end
+		return info
+	else
+		print("INFO not found in the input .vcf file!\n")
 	end
 end
 
@@ -87,11 +94,6 @@ function chrange(lines, chr::AbstractString=chr)
 	return chr_start, chr_end
 end
 
-lines = read.lines(inputf)
-record = read.records(lines)
-from, to = chrange(lines, chr)
-print(from, "\t", to, "\t\n")
-
 function getchr(records)
 	chrs = []
 	for ln in records
@@ -103,7 +105,7 @@ function getchr(records)
 end
 
 # Function for extracting queried segment or full chromosome
-function fetch(records, chr::AbstractString=chr, start=from, stop=to)
+function fetch(records, chr::AbstractString, start=from, stop=to)
 	pos1 = []
 	for rec2 in records
 		spl2 = split(rec2, "\t")
@@ -128,21 +130,11 @@ function fetch(records, chr::AbstractString=chr, start=from, stop=to)
 		end
 	end	
 end
-
+#=
 #function alts(lines)
 #function contigs
 
 #function filters
 #function formats
 #function metadata
-
-println(sizeof(record))
-out1 = fetch(record)
-print(out1)
-chromosomes = getchr(record)
-println(chromosomes)
-
-#version = version(lines[1])
-#header = header(lines)
-#info = infos(header)
-end
+=#
