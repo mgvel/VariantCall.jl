@@ -1,7 +1,6 @@
 #!/usr/bin/env julia
 
 import GZip
-#using NGS
 
 # Function for reading input file
 function read(file)
@@ -82,7 +81,7 @@ end
 # Function for extracting start and end position of queried chromosome                 
 function chrange(lines, chr::AbstractString=chr)
 	pos = []
-	for rec in records
+	for rec in lines
 		spl = split(rec, "\t")
 		if spl[1] == chr
 			push!(pos, spl[2])
@@ -105,8 +104,14 @@ function getchr(records)
 end
 
 # Function for extracting queried segment or full chromosome
-function fetch(records, chr::AbstractString, start=from, stop=to)
+function fetch(records, chr::AbstractString, start=0, stop=0)
 	pos1 = []
+	
+	# If specific range is not asked entire chomosome is selected as range
+	if start == 0 && stop == 0
+		start, stop = chrange(records, chr)
+	end
+	
 	for rec2 in records
 		spl2 = split(rec2, "\t")
 		if spl2[1] == chr	
