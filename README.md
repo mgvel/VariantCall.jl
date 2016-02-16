@@ -1,3 +1,4 @@
 # NGS
 
-[![Build Status](https://travis-ci.org/mgvel/NGS.jl.svg?branch=master)](https://travis-ci.org/mgvel/NGS.jl)
+
+Pkg.clone("git://github.com/mgvel/NGS.jl.git")
