@@ -1,4 +1,4 @@
-using NGS
+using VariantCall
 using Base.Test
 
 # write your own tests here

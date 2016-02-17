@@ -1,16 +1,16 @@
-using NGS
+using VariantCall
 
 chr = ARGS[1]
 inputf = ARGS[2]
 
-#line = NGS.read(inputf)
-record = NGS.records(inputf)
+#line = VariantCall.read(inputf)
+record = VariantCall.records(inputf)
 #println(join(record,"\n"))
 #print(join(record[1:15]), "\n")
 
-#inf = NGS.info(record)
-#aa = NGS.infoAA(record)
-thouG = NGS.E1000G(record)
+#inf = VariantCall.info(record)
+#aa = VariantCall.infoAA(record)
+thouG = VariantCall.E1000G(record)
 for ln in thouG
 	println(ln)
 end
@@ -18,15 +18,15 @@ end
 #println(info)
 
 #from, to = chrange(record, chr)
-#extract = NGS.fetch(record, chr, 17104729, 18078510)
+#extract = VariantCall.fetch(record, chr, 17104729, 18078510)
 #=
-alterations = NGS.uniqalts(record)
+alterations = VariantCall.uniqalts(record)
 for ln in alterations#[1:30]
 	println(ln)
 end
 =#
-# out1 = NGS.fetch(record, chr)
+# out1 = VariantCall.fetch(record, chr)
 
 #print(out1)
-#chromosomes = NGS.getchr(record)
+#chromosomes = VariantCall.getchr(record)
 #println(chromosomes)

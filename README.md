@@ -1,4 +1,4 @@
-# NGS
+# VariantCall
 
 
-Pkg.clone("git://github.com/mgvel/NGS.jl.git")
+Pkg.clone("git://github.com/mgvel/VariantCall.jl.git")
