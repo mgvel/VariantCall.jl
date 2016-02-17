@@ -73,7 +73,7 @@ function version(lines)
 end
 
 # Function for extracting INFO provided in header lines
-function infos(lines)
+function HeadInfos(lines)
 	headers = header(lines)
 	info = []
 	if sizeof(headers) < 1
@@ -169,7 +169,7 @@ function alts(records)
 		push!(alt, pair)
 	end
 	alt = unique(alt)
-	return(alt)
+	return alt
 end
 
 # Get unique list of alteration (ALT) types 
@@ -181,7 +181,46 @@ function uniqalts(records)
 		push!(alt, tmp[5])
 	end
 	alt = unique(alt)
-	return(alt)
+	return alt
+end
+
+# INFO Fixed field from input VCF file
+function info(records)
+	info = []
+	for line in records
+		tmp = split(line, "\t")
+		#tmp[5] => ALT
+		push!(info, tmp[8])
+	end
+	info = unique(info)
+	return info
+end
+
+# AA : ancestral allele
+function infoAA(records)
+	inf = info(records)
+	aa = []
+	for line in inf
+		tmp = split(line, ";")
+		for col in tmp
+			#tmp[end] => AA
+			if ismatch(r"AA=", col)
+				push!(aa, col)
+			end
+		end
+	end
+	return aa
+end
+
+# 1000G : membership in 1000 Genomes
+function E1000G(records)
+	tg = []
+	for line in records
+		if ismatch(r"E_1000G", line)
+			push!(tg, line)
+		end
+	end
+	return tg
 end
 
 #=
