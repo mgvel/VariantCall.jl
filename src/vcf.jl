@@ -18,6 +18,18 @@ function read(file)
 	return lines
 end
 
+# For checking the input chromosome arguement
+function CheckChrmosome(chr)
+	match = 0
+	possible = ["X"; "Y"; range(1,22)]
+	for chrom in possible
+		if string(chrom) == chr
+			match += 1
+		end
+	end
+	return match
+end
+
 # Function to extract only the vcf record containing lines
 function records(file)
 	lines = read(file)
@@ -80,17 +92,22 @@ end
 
 # Function for extracting start and end position of queried chromosome                 
 function chrange(lines, chr::AbstractString=chr)
-	pos = []
-	for rec in lines
-		spl = split(rec, "\t")
-		if spl[1] == chr
-			push!(pos, spl[2])
-			#println(spl[2])
+	inpt_chr = CheckChrmosome(chr)
+	if inpt_chr >= 1
+		pos = []
+		for rec in lines
+			spl = split(rec, "\t")
+			if spl[1] == chr
+				push!(pos, spl[2])
+				#println(spl[2])
+			end
 		end
+		chr_start = parse(Int, pos[1])
+		chr_end   = parse(Int, pos[end])
+		return chr_start, chr_end
+	else
+		println("Please check the requested Chromosome name! \t *** $chr ***")
 	end
-	chr_start = parse(Int, pos[1])
-	chr_end   = parse(Int, pos[end])
-	return chr_start, chr_end
 end
 
 function getchr(records)
@@ -105,40 +122,43 @@ end
 
 # Function for extracting queried segment or full chromosome
 function fetch(records, chr::AbstractString, start=0, stop=0)
-	pos1 = []
-	
-	# If specific range is not asked entire chomosome is selected as range
-	if start == 0 && stop == 0
-		start, stop = chrange(records, chr)
-	end
-	
-	for rec2 in records
-		spl2 = split(rec2, "\t")
-		if spl2[1] == chr	
-			push!(pos1, spl2[2])
-		#	println(spl2[2])
+	inpt_chr = CheckChrmosome(chr)
+	if inpt_chr >= 1
+		pos1 = []
+		# If specific range is not asked, then entire chomosome is selected
+		if start == 0 && stop == 0
+			start, stop = chrange(records, chr)
 		end
-	end
+	
+		for rec2 in records
+			spl2 = split(rec2, "\t")
+			if spl2[1] == chr	
+				push!(pos1, spl2[2])
+		#		println(spl2[2])
+			end
+		end
+		
+		pos_start = parse(Int, pos1[1])
+		pos_end   = parse(Int, pos1[end])
 
-	pos_start = parse(Int, pos1[1])
-	pos_end   = parse(Int, pos1[end])
-
-	for rec3 in records
-		spl3 = split(rec3, "\t")
-		cur_pos = parse(Int, spl3[2])
-		region  = spl3[1]
+		for rec3 in records
+			spl3 = split(rec3, "\t")
+			cur_pos = parse(Int, spl3[2])
+			region  = spl3[1]
 			
-		if (start < pos_start && stop > pos_end)|| start < pos_start || stop > pos_end || stop < pos_start
-			println("Request out of range!")
-		elseif region == chr && start <= cur_pos <= stop
-			print(rec3)
-		end
-	end	
+			if (start < pos_start && stop > pos_end)|| start < pos_start || stop > pos_end || stop < pos_start
+				println("Request out of range!")
+			elseif region == chr && start <= cur_pos <= stop
+				print(rec3)
+			end
+		end	
+	else
+		println("Please check the requested Chromosome name! \t *** $chr ***")
+	end
 end
 #=
 #function alts(lines)
 #function contigs
-
 #function filters
 #function formats
 #function metadata

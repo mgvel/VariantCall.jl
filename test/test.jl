@@ -11,8 +11,8 @@ record = NGS.records(inputf)
 #info = NGS.infos(record)
 #println(info)
 
-#from, to = chrange(record, chr)
-#extract = NGS.fetch(record, chr, 624388, 2787284)
+from, to = chrange(record, chr)
+extract = NGS.fetch(record, chr, 1014318, 1232471)
 
 # out1 = NGS.fetch(record, chr)
 
