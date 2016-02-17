@@ -11,10 +11,6 @@ record = VariantCall.records(inputf)
 #inf = VariantCall.info(record)
 #aa = VariantCall.infoAA(record)
 thouG = VariantCall.E1000G(record)
-for ln in thouG
-	println(ln)
-end
-
 #println(info)
 
 #from, to = chrange(record, chr)

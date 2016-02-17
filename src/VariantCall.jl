@@ -8,12 +8,17 @@ module VariantCall
 	export read,
 			records,
 			infos,
+			infoAA,
+			HeadInfos,
 			version,
 			header,
 			chromosomes,
 			fetch,
 			chrange,
 			region,
+			alts,
+			uniqalts,
+			E1000G,
 			@vcf_recrd
 	
 	# Load package files
