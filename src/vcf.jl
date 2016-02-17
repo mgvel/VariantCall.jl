@@ -102,9 +102,9 @@ function chrange(lines, chr::AbstractString=chr)
 				#println(spl[2])
 			end
 		end
-		chr_start = parse(Int, pos[1])
+		chr_strt = parse(Int, pos[1])
 		chr_end   = parse(Int, pos[end])
-		return chr_start, chr_end
+		return chr_strt, chr_end
 	else
 		println("Please check the requested Chromosome name! \t *** $chr ***")
 	end
@@ -116,18 +116,20 @@ function getchr(records)
 		spl = split(ln, "\t")
 		push!(chrs, spl[1])
 	end
-	list  = unique(chrs)
-	return list
+	list  = sort(unique(chrs))
+	for ch in list
+		print("$ch\n")
+	end
 end
 
 # Function for extracting queried segment or full chromosome
-function fetch(records, chr::AbstractString, start=0, stop=0)
+function fetch(records, chr::AbstractString, strt=0, stop=0)
 	inpt_chr = CheckChrmosome(chr)
 	if inpt_chr >= 1
 		pos1 = []
 		# If specific range is not asked, then entire chomosome is selected
-		if start == 0 && stop == 0
-			start, stop = chrange(records, chr)
+		if strt == 0 && stop == 0
+			strt, stop = chrange(records, chr)
 		end
 	
 		for rec2 in records
@@ -138,7 +140,7 @@ function fetch(records, chr::AbstractString, start=0, stop=0)
 			end
 		end
 		
-		pos_start = parse(Int, pos1[1])
+		pos_strt = parse(Int, pos1[1])
 		pos_end   = parse(Int, pos1[end])
 
 		for rec3 in records
@@ -146,9 +148,9 @@ function fetch(records, chr::AbstractString, start=0, stop=0)
 			cur_pos = parse(Int, spl3[2])
 			region  = spl3[1]
 			
-			if (start < pos_start && stop > pos_end)|| start < pos_start || stop > pos_end || stop < pos_start
+			if (strt < pos_strt && stop > pos_end)|| strt < pos_strt || stop > pos_end || stop < pos_strt
 				println("Request out of range!")
-			elseif region == chr && start <= cur_pos <= stop
+			elseif region == chr && strt <= cur_pos <= stop
 				print(rec3)
 			end
 		end	
@@ -156,8 +158,33 @@ function fetch(records, chr::AbstractString, start=0, stop=0)
 		println("Please check the requested Chromosome name! \t *** $chr ***")
 	end
 end
+
+# Get unique pair of alteration records REF => ALT
+function alts(records)
+	alt = []
+	for line in records
+		tmp = split(line, "\t")
+		#tmp[4] => REF ; $tmp[5] => ALT
+		pair = tmp[4] *" => " * tmp[5]
+		push!(alt, pair)
+	end
+	alt = unique(alt)
+	return(alt)
+end
+
+# Get unique list of alteration (ALT) types 
+function uniqalts(records)
+	alt = []
+	for line in records
+		tmp = split(line, "\t")
+		#tmp[5] => ALT
+		push!(alt, tmp[5])
+	end
+	alt = unique(alt)
+	return(alt)
+end
+
 #=
-#function alts(lines)
 #function contigs
 #function filters
 #function formats
