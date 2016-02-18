@@ -1,6 +1,6 @@
 #!/usr/bin/env julia
 
-import GZip
+using GZip
 
 # Function for reading input file
 function read(file)
@@ -166,9 +166,16 @@ function alts(records)
 	alt = []
 	for line in records
 		tmp = split(line, "\t")
-		#tmp[4] => REF ; $tmp[5] => ALT
-		pair = tmp[4] *" => " * tmp[5]
-		push!(alt, pair)
+		# if ID column present
+		if ismatch(r"[\d]", tmp[3])
+			#tmp[4] => REF ; $tmp[5] => ALT
+			pair = tmp[4] *" => " * tmp[5]
+			push!(alt, pair)
+		else
+			#tmp[3] => REF ; $tmp[4] => ALT
+			pair = tmp[3] *" => " * tmp[4]
+			push!(alt, pair)
+		end
 	end
 	alt = unique(alt)
 	return alt
@@ -179,8 +186,14 @@ function uniqalts(records)
 	alt = []
 	for line in records
 		tmp = split(line, "\t")
-		#tmp[5] => ALT
-		push!(alt, tmp[5])
+		# if ID column present
+		if ismatch(r"[\d]", tmp[3])
+			#$tmp[5] => ALT
+			push!(alt, tmp[5])
+		else
+			#$tmp[4] => ALT
+			push!(alt, tmp[4])
+		end
 	end
 	alt = unique(alt)
 	return alt
@@ -224,7 +237,6 @@ function E1000G(records)
 	end
 	return tg
 end
-
 
 #=
 #function contigs
