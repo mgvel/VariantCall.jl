@@ -154,6 +154,8 @@ function fetch(records, chr::AbstractString, strt=0, stop=0)
 				print(rec3)
 			end
 		end	
+		
+		
 	else
 		println("Please check the requested Chromosome name! \t *** $chr ***")
 	end
@@ -222,6 +224,7 @@ function E1000G(records)
 	end
 	return tg
 end
+
 
 #=
 #function contigs

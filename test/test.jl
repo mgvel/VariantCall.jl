@@ -15,12 +15,12 @@ thouG = VariantCall.E1000G(record)
 
 #from, to = chrange(record, chr)
 #extract = VariantCall.fetch(record, chr, 17104729, 18078510)
-#=
+
 alterations = VariantCall.uniqalts(record)
 for ln in alterations#[1:30]
 	println(ln)
 end
-=#
+
 # out1 = VariantCall.fetch(record, chr)
 
 #print(out1)
