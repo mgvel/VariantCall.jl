@@ -242,52 +242,6 @@ function merge(vcfiles)
 
 
 end
-#=
-def variant_merge(vcf_paths):
- 481         sort_in, sort_out = shell_stdinout('sort -k2,2 -k3,3n -k4,4 -k5,5')
- 482         cons_headers = []    # Consensus headers
- 483         vcf_samples = []     # Sample names of each VCF
- 484         for vcf_index, vcf_path in enumerate(vcf_paths):
- 485                 info('Merging VCF file %s...' % vcf_path)
- 486                 vcf = zopen(vcf_path)
- 487                 for line in vcf:
- 488                         if not line.startswith('#'): break
- 489                 headers = line.rstrip('\n').split('\t')
- 490                 gtype_col = (4 if not 'ESP6500' in headers else
- 491                         headers.index('ESP6500') + 1)
- 492                 if not cons_headers: cons_headers = headers[:gtype_col]
- 493                 if cons_headers != headers[:gtype_col]: error('Header mismatch!')
- 494                 vcf_samples.append(headers[gtype_col:])
- 495                 for line in vcf:
- 496                         sort_in.write('%d\t%s' % (vcf_index, line))
- 497         sort_in.close()
- 498
- 499         print('\t'.join(cons_headers + sum(vcf_samples, [])))
- 500         vcf_sample_counts = [len(samples) for samples in vcf_samples]
- 501         S = sum(vcf_sample_counts)
- 502         vcf_sample_col = [sum(vcf_sample_counts[0:k])
- 503                 for k in range(len(vcf_samples))]
- 504
- 505         info('Merged VCF will contain:')
- 506         info('- %d header columns' % len(cons_headers))
- 507         for samples, path in zip(vcf_samples, vcf_paths):
- 508                 info('- %d columns from %s' % (len(samples), path))
- 509
- 510         prev = None
- 511         calls = [':0:0'] * S
- 512         for line in sort_out:
- 513                 cols = line.rstrip('\n').split('\t')
- 514                 vcf_index = int(cols[0])
- 515                 call_col = vcf_sample_col[vcf_index]
- 516                 if prev != cols[1:5]:
- 517                         if prev != None:
- 518                                 print('\t'.join(prev + calls))
- 519                         prev = cols[1:gtype_col+1]
- 520                         calls = [':0:0'] * S
- 521                 calls[call_col:call_col+vcf_sample_counts[vcf_index]] = \
- 522                         cols[gtype_col+1:]
- 523
- 524         print('\t'.join(prev + calls))    # Handle the last line
 
 #function contigs
 #function filters
