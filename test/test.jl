@@ -1,3 +1,5 @@
+#!/usr/bin/env julia
+
 using VariantCall
 
 chr = ARGS[1]

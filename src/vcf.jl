@@ -90,7 +90,7 @@ function HeadInfos(lines)
 	end
 end
 
-# Function for extracting start and end position of queried chromosome                 
+# Function for extracting start and end position of queried chromosome
 function chrange(lines, chr::AbstractString=chr)
 	inpt_chr = CheckChrmosome(chr)
 	if inpt_chr >= 1
@@ -131,15 +131,15 @@ function fetch(records, chr::AbstractString, strt=0, stop=0)
 		if strt == 0 && stop == 0
 			strt, stop = chrange(records, chr)
 		end
-	
+
 		for rec2 in records
 			spl2 = split(rec2, "\t")
-			if spl2[1] == chr	
+			if spl2[1] == chr
 				push!(pos1, spl2[2])
 		#		println(spl2[2])
 			end
 		end
-		
+
 		pos_strt = parse(Int, pos1[1])
 		pos_end   = parse(Int, pos1[end])
 
@@ -147,15 +147,15 @@ function fetch(records, chr::AbstractString, strt=0, stop=0)
 			spl3 = split(rec3, "\t")
 			cur_pos = parse(Int, spl3[2])
 			region  = spl3[1]
-			
+
 			if (strt < pos_strt && stop > pos_end)|| strt < pos_strt || stop > pos_end || stop < pos_strt
 				println("Request out of range!")
 			elseif region == chr && strt <= cur_pos <= stop
 				print(rec3)
 			end
-		end	
-		
-		
+		end
+
+
 	else
 		println("Please check the requested Chromosome name! \t *** $chr ***")
 	end
@@ -181,7 +181,7 @@ function alts(records)
 	return alt
 end
 
-# Get unique list of alteration (ALT) types 
+# Get unique list of alteration (ALT) types
 function uniqalts(records)
 	alt = []
 	for line in records
@@ -261,18 +261,18 @@ def variant_merge(vcf_paths):
  495                 for line in vcf:
  496                         sort_in.write('%d\t%s' % (vcf_index, line))
  497         sort_in.close()
- 498 
+ 498
  499         print('\t'.join(cons_headers + sum(vcf_samples, [])))
  500         vcf_sample_counts = [len(samples) for samples in vcf_samples]
  501         S = sum(vcf_sample_counts)
  502         vcf_sample_col = [sum(vcf_sample_counts[0:k])
  503                 for k in range(len(vcf_samples))]
- 504 
+ 504
  505         info('Merged VCF will contain:')
  506         info('- %d header columns' % len(cons_headers))
  507         for samples, path in zip(vcf_samples, vcf_paths):
  508                 info('- %d columns from %s' % (len(samples), path))
- 509 
+ 509
  510         prev = None
  511         calls = [':0:0'] * S
  512         for line in sort_out:
@@ -286,7 +286,7 @@ def variant_merge(vcf_paths):
  520                         calls = [':0:0'] * S
  521                 calls[call_col:call_col+vcf_sample_counts[vcf_index]] = \
  522                         cols[gtype_col+1:]
- 523 
+ 523
  524         print('\t'.join(prev + calls))    # Handle the last line
 
 #function contigs
