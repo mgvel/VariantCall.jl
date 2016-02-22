@@ -22,7 +22,7 @@ function merge(paths = ARGS[1:end])
 		println("Merging ... ... ..: ", basename(fl))
 		vcf = read(fl)
 		for line in vcf
-			if ismatch(r"^#", line)
+			if ismatch(r"^#|CHROM", line)
 				push!(headers, line)
 			else
 				push!(samples, line)
@@ -30,11 +30,19 @@ function merge(paths = ARGS[1:end])
 		end
 	end
 	return headers, samples
+
+
+
 end
 
-
 id, data = merge()
-println(sizeof(id), "\t", sizeof(data))
+println(length(id), "\t", length(data))
+
+ln = 1
+while ln <= length(id)
+	println(id[ln] * " +++++++++ ")
+	ln += 1
+end
 
 #=
 ln  = 1
@@ -42,3 +50,4 @@ while ln <= sizeof(id)
 		println(id[ln])
 		ln += 1
 end
+=#
