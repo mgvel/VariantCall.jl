@@ -33,11 +33,11 @@ function extract(paths = ARGS[1:end])
 end
 
 function merge(headers, samples)
-	
+
 
 end
 
-id, data = merge()
+id, data = extract()
 println(length(id), "\t", length(data))
 
 ln = 1
