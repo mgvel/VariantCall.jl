@@ -15,11 +15,11 @@ function read(file)
 	return lines
 end
 
-function merge(paths = ARGS[1:end])
+function extract(paths = ARGS[1:end])
 	headers = []
 	samples = []
 	for fl in paths
-		println("Merging ... ... ..: ", basename(fl))
+		println("Extracting ... ... ... ", basename(fl))
 		vcf = read(fl)
 		for line in vcf
 			if ismatch(r"^#|CHROM", line)
@@ -30,8 +30,10 @@ function merge(paths = ARGS[1:end])
 		end
 	end
 	return headers, samples
+end
 
-
+function merge(headers, samples)
+	
 
 end
 
