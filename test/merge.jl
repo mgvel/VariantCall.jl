@@ -32,24 +32,51 @@ function extract(paths = ARGS[1:end])
 	return headers, samples
 end
 
-function merge(headers, samples)
-
-
+function merge_names(headers)
+	def = []
+	sampl = []
+	for entry in headers
+		line  = split(entry, "\t")
+		push!(def, line[1:4])
+		push!(sampl,line[5:end])
+	end
+	def = unique(def)
+	sampl = unique(sampl)
+	names = (def, sampl)
+	return names
 end
 
-id, data = extract()
-println(length(id), "\t", length(data))
+function merge_vcf(samples)
+	def = []
+	for entry in samples
+		line  = split(entry, "\t")
+		push!(def, line[1:4])
+	end
 
+	def = unique(def)
+	out = []
+
+	for item in def
+		push!(out, item)
+		for ln in samples
+			cols = split(ln, "\t")
+			if item == cols[1:4]
+				push!(out, cols[5:end])
+			end
+		end
+		push!(out, "\n")
+		#println(out)
+	end
+	return out
+end
+
+headers, samples = extract()
+head = merge_names(headers)
+data = merge_vcf(samples)
+
+println(head)
 ln = 1
-while ln <= length(id)
-	println(id[ln] * " +++++++++ ")
+while ln <=lenght(data)
+	println(data[ln])
 	ln += 1
 end
-
-#=
-ln  = 1
-while ln <= sizeof(id)
-		println(id[ln])
-		ln += 1
-end
-=#
