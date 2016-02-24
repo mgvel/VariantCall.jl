@@ -47,16 +47,15 @@ function merge_names(headers)
 end
 
 function merge_vcf(samples)
+	out = []
 	def = []
 	for entry in samples
 		line  = split(entry, "\t")
 		push!(def, line[1:4])
-	end
-
+		end
 	def = unique(def)
-	out = []
 
-	for item in def
+	 for item in def
 		push!(out, item)
 		for ln in samples
 			cols = split(ln, "\t")
