@@ -29,7 +29,6 @@ def zopen(path, mode='r'):
 
 def variant_recall(vcf_path, min_alt_reads=2, min_alt_frac=0.05):
   vcf_file = zopen(vcf_path)
-
   for line in vcf_file:
     line = line.decode("utf-8")
     print(line)
