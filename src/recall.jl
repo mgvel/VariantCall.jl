@@ -18,10 +18,8 @@ function recall(paths = ARGS[1:end], min_alt_read::Int=4, min_alt_frac=0.2)
             push!(gt_reads, split(gt, ':')[1])
             push!(alt_reads, split(gt, ':')[2])
           end
-          
           println(gt_reads)  
         end
-      #println(gt_reads)  
       end
    end
 end
