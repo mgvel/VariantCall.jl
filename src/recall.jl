@@ -24,7 +24,7 @@ function recall(paths = ARGS[1:end], min_alt_read::Int=2, min_alt_frac=0.05)
 				end
 			end
 		end
-   end
+	end
 end
 
 recall()
