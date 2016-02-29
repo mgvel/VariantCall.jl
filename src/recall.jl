@@ -2,7 +2,8 @@
 
 include("read.jl")
 
-# Function to call variation based on given alt reads and fraction 
+# Function to call variation based on given alt reads and fraction cut-off
+
 function recall(paths = ARGS[1:end], min_alt_read::Int=2, min_alt_frac=0.05)
 	for file in paths
 		vcf = read(file)
