@@ -1,22 +1,6 @@
 #!/usr/bin/env julia
 
-using GZip
-
-# Function for reading input file
-function read(file)
-	if ismatch(r".vcf$", file)
-		f = open(file)
-		lines = readlines(f)
-		println("Successfully read $file file!")
-		close(f)
-	elseif ismatch(r".gz$", file)
-		f = GZip.open(file)
-		lines = readlines(f)
-		println("Successfully read archived $file file!")
-		close(f)
-	end
-	return lines
-end
+include("read.jl")
 
 # For checking the input chromosome arguement
 function CheckChrmosome(chr)

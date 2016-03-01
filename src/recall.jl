@@ -7,7 +7,7 @@ include("read.jl")
 function recall(paths = ARGS[1:end], min_alt_read::Int=2, min_alt_frac=0.05)
 	for file in paths
 		vcf = read(file)
-      
+
 		for line in vcf
 			if ismatch(r"^#|CHROM", line)
 				print(line)
