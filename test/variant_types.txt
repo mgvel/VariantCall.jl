@@ -1,0 +1,13 @@
+3_prime_UTR_variant
+5_prime_UTR_variant
+coding_sequence_variant
+downstream_gene_variant
+incomplete_terminal_codon_variant
+intron_variant
+NMD_transcript_variant
+non_coding_transcript_exon_variant
+non_coding_transcript_variant
+splice_acceptor_variant
+splice_donor_variant
+splice_region_variant
+upstream_gene_variant
