@@ -51,7 +51,6 @@ function merge_vcf(samples)
 			end
 		end
 		push!(out, "\n")
-		#println(out)
 	end
 	return out
 end
