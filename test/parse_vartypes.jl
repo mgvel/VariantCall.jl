@@ -1,6 +1,6 @@
 #!/usr/bin/env julia
 
-# Complete by Wed Mar  2 15:50:53 EET 2016
+# Complete @ Wed Mar 2 15:50:53 EET 2016
 # Program from parsing Ensembl gene ids for matching variant types
 # 13 variant types from test/variant_types.txt and
 # test/chr*.vep files are used as input
