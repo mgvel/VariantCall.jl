@@ -13,17 +13,20 @@ function readchr(fh=ARGS[1])
     return lines
 end
 
+#=
 tst = readchr()
 println(length(tst))
 
 for ln in tst[end-15:end]
     print(ln)
 end
+=#
 
-#=
 function index()
+
 end
 
+#=
 function coding()
 end
 
