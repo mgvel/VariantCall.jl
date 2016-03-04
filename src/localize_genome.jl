@@ -5,14 +5,19 @@ using GZip
 function readchr(fh=ARGS[1])
     if ismatch(r".gz$", fh)
         f = GZip.open(fh)
-        lines = readlines(fh)
-        close(fh)
+        lines = readlines(f)
     else
         f = open(fh)
         lines = readlines(fh)
-        close(fh)
     end
     return lines
+end
+
+tst = readchr()
+println(length(tst))
+
+for ln in tst[end-15:end]
+    print(ln)
 end
 
 #=
