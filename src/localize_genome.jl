@@ -1,7 +1,17 @@
 #!/usr/bin/env julia
 
+using GZip
+
 function readchr(fh=ARGS[1])
-    lines = readall(fh)
+    if ismatch(r".gz$", fh)
+        f = GZip.open(fh)
+        lines = readlines(fh)
+        close(fh)
+    else
+        f = open(fh)
+        lines = readlines(fh)
+        close(fh)
+    end
     return lines
 end
 
