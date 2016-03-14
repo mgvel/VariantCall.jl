@@ -40,8 +40,8 @@ my @reg_feats = @{$regfeat_adaptor->fetch_all_by_Slice($slice)};
 foreach my $rf(@reg_feats){
         print $rf->stable_id.": ";
         print_feature($rf);
-        print "\tCell: ".$rf->cell_type->name."\n";
-        print "\t Feature Type: ".$rf->feature_type->name."\n";
+#        print "\tCell: ".$rf->cell_type->name."\n";
+#        print "\t Feature Type: ".$rf->feature_type->name."\n";
 }
 
 sub print_feature{
