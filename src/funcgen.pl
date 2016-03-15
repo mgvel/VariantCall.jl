@@ -3,16 +3,15 @@
 #
 #         FILE: funcgen.pl
 #
-#        USAGE: ./funcgen.pl  
+#        USAGE: ./funcgen.pl <chr> 
 #
-#  DESCRIPTION: 
+#  DESCRIPTION: Tool to retrive regulatory feature regions of given chromosome
 #
-#      OPTIONS: ---
-# REQUIREMENTS: ---
+# REQUIREMENTS: BioPerl, EnsEMBL
 #         BUGS: ---
 #        NOTES: ---
-#       AUTHOR: YOUR NAME (), 
-# ORGANIZATION: 
+#       AUTHOR: Mutharasu Gnanavel 
+# ORGANIZATION: University of Tampere
 #      VERSION: 1.0
 #      CREATED: 03/14/2016 03:35:44 PM
 #     REVISION: ---
