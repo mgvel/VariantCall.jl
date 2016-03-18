@@ -22,10 +22,20 @@ for ln in tst[end-15:end]
 end
 =#
 
-function index()
-
+function index(lines=readchr())
+    pos = []
+    #lines = readchr()
+    for line in lines
+        cols = split(line, "\t")
+        push!(pos, cols[2])
+    end
+    return pos
 end
 
+out = index()
+for i in out
+    println(i)
+end
 #=
 function coding()
 end
