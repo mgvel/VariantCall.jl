@@ -14,7 +14,6 @@ function readchr(fh=ARGS[1])
     return lines
 end
 
-
 function index(lines=readchr())
     pos = []
     #lines = readchr()
@@ -30,10 +29,10 @@ for i in out
     println(i)
 end
 
-#=
 function coding()
 end
 
+#=
 function nonCoding()
 end
 =#
