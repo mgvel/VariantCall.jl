@@ -1,6 +1,7 @@
 #!/usr/bin/env julia
 
 using GZip
+include("read.jl")
 
 function readchr(fh=ARGS[1])
     if ismatch(r".gz$", fh)
@@ -13,14 +14,6 @@ function readchr(fh=ARGS[1])
     return lines
 end
 
-#=
-tst = readchr()
-println(length(tst))
-
-for ln in tst[end-15:end]
-    print(ln)
-end
-=#
 
 function index(lines=readchr())
     pos = []
@@ -36,6 +29,7 @@ out = index()
 for i in out
     println(i)
 end
+
 #=
 function coding()
 end
