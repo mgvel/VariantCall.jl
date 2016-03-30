@@ -23,8 +23,3 @@ for ln in alterations#[1:30]
 	println(ln)
 end
 
-# out1 = VariantCall.fetch(record, chr)
-
-#print(out1)
-#chromosomes = VariantCall.getchr(record)
-#println(chromosomes)
