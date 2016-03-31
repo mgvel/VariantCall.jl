@@ -2,7 +2,9 @@
 
 include("read.jl")
 
-# For checking the input chromosome arguement
+"""
+For checking the input chromosome arguement
+"""
 function CheckChrmosome(chr)
 	match = 0
 	possible = ["X"; "Y"; range(1,22)]
@@ -14,7 +16,9 @@ function CheckChrmosome(chr)
 	return match
 end
 
-# Function to extract only the vcf record containing lines
+"""
+Function to extract only the vcf record containing lines
+"""
 function records(file)
 	lines = read(file)
 	record = []
@@ -26,7 +30,9 @@ function records(file)
 	return record
 end
 
-# Function for extracting the header lines
+"""
+Function for extracting the header lines
+"""
 function header(lines)
 	head = []
 	for ln in lines
@@ -41,7 +47,9 @@ function header(lines)
 	end
 end
 
-# Function for getting Variant Call Format version information
+"""
+Function for getting Variant Call Format version information
+"""
 function version(lines)
 	headers = header(lines)
 	if sizeof(headers) < 1
@@ -56,7 +64,9 @@ function version(lines)
 	end
 end
 
-# Function for extracting INFO provided in header lines
+"""
+Function for extracting INFO provided in header lines
+"""
 function HeadInfos(lines)
 	headers = header(lines)
 	info = []
@@ -74,7 +84,9 @@ function HeadInfos(lines)
 	end
 end
 
-# Function for extracting start and end position of queried chromosome
+"""
+Function for extracting start and end position of queried chromosome
+"""
 function chrange(lines, chr::AbstractString=chr)
 	inpt_chr = CheckChrmosome(chr)
 	if inpt_chr >= 1
@@ -106,7 +118,9 @@ function getchr(records)
 	end
 end
 
-# Function for extracting queried segment or entire chromosome
+"""
+Function for extracting queried segment or entire chromosome
+"""
 function fetch(records, chr::AbstractString, strt=0, stop=0)
 	inpt_chr = CheckChrmosome(chr)
 	if inpt_chr >= 1
@@ -143,7 +157,9 @@ function fetch(records, chr::AbstractString, strt=0, stop=0)
 	end
 end
 
-# Get unique pair of alteration records REF => ALT
+"""
+Get unique pair of alteration records REF => ALT
+"""
 function alts(records)
 	alt = []
 	for line in records
@@ -163,7 +179,9 @@ function alts(records)
 	return alt
 end
 
-# Get unique list of alteration (ALT) types
+"""
+Get unique list of alteration (ALT) types
+"""
 function uniqalts(records)
 	alt = []
 	for line in records
@@ -181,7 +199,9 @@ function uniqalts(records)
 	return alt
 end
 
-# INFO Fixed field from input VCF file
+"""
+INFO Fixed field from input VCF file
+"""
 function info(records)
 	info = []
 	for line in records
@@ -193,7 +213,9 @@ function info(records)
 	return info
 end
 
-# AA : ancestral allele
+"""
+AA : ancestral allele
+"""
 function infoAA(records)
 	inf = info(records)
 	aa = []
@@ -209,7 +231,9 @@ function infoAA(records)
 	return aa
 end
 
-# 1000G : membership in 1000 Genomes
+"""
+1000G : membership in 1000 Genomes
+"""
 function E1000G(records)
 	tg = []
 	for line in records
@@ -221,7 +245,6 @@ function E1000G(records)
 end
 
 function merge(vcfiles)
-
 
 end
 
