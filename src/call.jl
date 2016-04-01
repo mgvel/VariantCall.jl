@@ -87,7 +87,7 @@ function call(genome_path, bam_paths...; alt_reads=3, alt_frac=0.1,
 	if region != ""; mpileup_options = "-r$(region)"; end
 
 	max_alleles = 100
-	for line in eachline(pipeline(`gnuparallel samtools mpileup -d $(max_depth) -A -x -R -sB -q0 $(mpileup_options) -f $(genome_path) ::: $(bam_paths)`, `$(spileup) $(alt_reads) $(min_mapq)`))
+	for line in eachline(pipeline(`samtools mpileup -d $(max_depth) -A -x -R -sB -q0 $(mpileup_options) -f $(genome_path) $(bam_paths)`, `$(spileup) $(alt_reads) $(min_mapq)`))
 		cols = split(rstrip(line), '\t')
 		assert(length(cols) >= 3)
 		if cols[3] == "N"; continue; end

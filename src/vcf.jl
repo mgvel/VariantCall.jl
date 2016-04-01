@@ -1,5 +1,12 @@
 #!/usr/bin/env julia
 
+module VCF
+
+export CheckChrmosome, records, header, version
+export HeadInfos, chrange, getchr, fetch
+export alts, uniqalts, info, infoAA
+export E1000G, merge
+
 include("read.jl")
 
 """
@@ -248,8 +255,8 @@ function merge(vcfiles)
 
 end
 
+end
 #function contigs
 #function filters
 #function formats
 #function metadata
-=#
