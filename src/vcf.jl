@@ -7,7 +7,7 @@ For checking the input chromosome arguement
 """
 function CheckChrmosome(chr)
 	match = 0
-	possible = ["X"; "Y"; range(1,22)]
+	possible = ["X"; "Y"; "M"; range(1,22)]
 	for chrom in possible
 		if string(chrom) == chr
 			match += 1
@@ -23,7 +23,7 @@ function records(file)
 	lines = read(file)
 	record = []
 	for ln in lines
-		if ismatch(r"^[\d]|X|Y", ln)
+		if ismatch(r"^[\d]|X|Y|M", ln)
 			push!(record, "$ln")
 		end
 	end
