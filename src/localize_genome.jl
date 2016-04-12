@@ -1,6 +1,7 @@
 #!/usr/bin/env julia
 
 using GZip
+
 include("read.jl")
 
 function readchr(fh=ARGS[1])
