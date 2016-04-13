@@ -1,5 +1,7 @@
 #!/usr/bin/env julia
 
+# FIXME I AM SLOW
+
 include("read.jl")
 
 function extract(paths = ARGS[1:end])
