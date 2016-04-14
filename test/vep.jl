@@ -19,16 +19,36 @@ function readVEP(fh)
             push!(locci, cols[2])
         end
     end
+
     return locci
 end
 
 gl = readVEP(f1)
 sm = readVEP(f2)
 
-println(length(gl))
-println(length(sm))
+function expand(locci)
+    for g in locci
+        if ismatch(r"-", g)
+            pos = split(locci, ':')
+            region = split(pos[2], '-')
+            n = parse(Int64, region[1])
 
-
-for g in gl[1:50]
-    println(g)
+            while n <= parse(Int64, region[end])
+                println(pos[1], ':', n)
+                n +=  1
+            end
+        else
+            println(g)
+        end
+    end
 end
+
+#=
+for g in gl[1:50]
+    if ismatch(r"-", g)
+        expand(g)
+    else
+        println(g)
+    end
+end
+=#
