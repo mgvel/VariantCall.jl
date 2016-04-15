@@ -4,8 +4,32 @@ f1 = ARGS[1]
 f2 = ARGS[2]
 
 """
+Expanding the dashed interval into single nucleotide positions
+example
+Y:2688071-2688075 =>
+                    Y:2688071
+                    Y:2688072
+                    Y:2688073
+                    Y:2688074
+                    Y:2688075
+"""
+function expand(locci)
+    list = []
+    pos = split(locci, ':')
+        chr = pos[1]
+        region = split(pos[2], '-')
+        n = parse(Int64, region[1])
+        while n <= parse(Int64, region[end])
+             out = "$chr" * ":" * "$n"
+            push!(list, out)
+            n +=  1
+        end
+    return list
+end
+
+"""
 Reads EnsEMBL Variant Effect Predictor (VEP) Results
-and returning mutation locci as a list
+and returning unique mutation locci as a list
 """
 function readVEP(fh)
     locci = []
@@ -19,34 +43,35 @@ function readVEP(fh)
             push!(locci, cols[2])
         end
     end
-    return locci
+
+    list = []
+    for g in locci
+        if ismatch(r"-", g)
+            test = expand(g)
+            for i in test
+                push!(list, i)
+            end
+        else
+            push!(list, g)
+        end
+    end
+    return unique(list)
 end
 
 gl = readVEP(f1)
 sm = readVEP(f2)
 
-function expand(locci)
-    #for g in locci
-    #    if ismatch(r"-", g)
-            pos = split(locci, ':')
-            region = split(pos[2], '-')
-            n = parse(Int64, region[1])
-
-            while n <= parse(Int64, region[end])
-                println(pos[1], ':', n)
-                n +=  1
-            end
-    #    else
-    #        println(g)
-    #    end
-    #end
-end
-
-
-for g in gl[1:50]
+println(length(gl))
+println(length(sm))
+#=
+for g in gl #[1:50]
     if ismatch(r"-", g)
-        expand(g)
+        test = expand(g)
+        for i in test
+            println(i)
+        end
     else
         println(g)
     end
 end
+=#
