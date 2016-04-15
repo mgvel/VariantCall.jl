@@ -5,7 +5,7 @@ f2 = ARGS[2]
 
 """
 Expanding the dashed interval into single nucleotide positions
-example
+example:
 Y:2688071-2688075 =>
                     Y:2688071
                     Y:2688072
@@ -29,7 +29,7 @@ end
 
 """
 Reads EnsEMBL Variant Effect Predictor (VEP) Results
-and returning unique mutation locci as a list
+and returning mutation locci as a list
 """
 function readVEP(fh)
     locci = []
@@ -55,16 +55,25 @@ function readVEP(fh)
             push!(list, g)
         end
     end
-    return unique(list)
+    return list
 end
 
 gl = readVEP(f1)
 sm = readVEP(f2)
 
+glOnly = setdiff(Set(gl), Set(sm))
+smOnly = setdiff(Set(sm), Set(gl))
+common = intersect(Set(gl), Set(sm))
+
+println("common = ", length(common))
+
 println(length(gl))
+println(length(glOnly))
+
 println(length(sm))
-#=
-for g in gl #[1:50]
+println(length(smOnly))
+
+for g in sm[1:10]
     if ismatch(r"-", g)
         test = expand(g)
         for i in test
@@ -74,4 +83,3 @@ for g in gl #[1:50]
         println(g)
     end
 end
-=#
