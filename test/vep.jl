@@ -4,7 +4,7 @@ f1 = ARGS[1]
 f2 = ARGS[2]
 
 """
-Expanding the dashed interval into single nucleotide positions
+Expanding the dashed intervals into single nucleotide positions
 example:
 Y:2688071-2688075 =>
                     Y:2688071
