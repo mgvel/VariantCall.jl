@@ -65,13 +65,15 @@ glOnly = setdiff(Set(gl), Set(sm))
 smOnly = setdiff(Set(sm), Set(gl))
 common = intersect(Set(gl), Set(sm))
 
+#=
 println("common = ", length(common))
 
 println(length(gl))
 println(length(glOnly))
 
 println(length(sm))
-println(length(smOnly))
+=#
+println("somatic = ", length(smOnly))
 
 for g in sm[1:10]
     if ismatch(r"-", g)
