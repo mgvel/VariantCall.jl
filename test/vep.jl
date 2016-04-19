@@ -75,12 +75,12 @@ for g in smOnly
         else
             cols = split(line, '\t')
             if g == cols[2]
-                println(g, "\t", line)
+                println(chomp(line))
             elseif ismatch(r"-", cols[2])
                 pos = expand(cols[2])
                 for item in pos
                     if g == item
-                        println(line)
+                        println(chomp(line))
                     end
                 end
             end
