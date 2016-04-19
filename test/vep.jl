@@ -73,9 +73,9 @@ println(length(glOnly))
 
 println(length(sm))
 =#
-println("somatic = ", length(smOnly))
+#println("somatic = ", length(smOnly))
 
-for g in sm[1:10]
+for g in smOnly
     if ismatch(r"-", g)
         test = expand(g)
         for i in test
