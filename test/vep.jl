@@ -63,25 +63,20 @@ sm = readVEP(f2)
 
 glOnly = setdiff(Set(gl), Set(sm))
 smOnly = setdiff(Set(sm), Set(gl))
+
 common = intersect(Set(gl), Set(sm))
-
-#=
-println("common = ", length(common))
-
-println(length(gl))
-println(length(glOnly))
-
-println(length(sm))
-=#
-#println("somatic = ", length(smOnly))
+smf = open(f2)
+lines = readlines(smf)
 
 for g in smOnly
-    if ismatch(r"-", g)
-        test = expand(g)
-        for i in test
-            println(i)
+    for line in lines
+        if ismatch(r"^#", line)
+            continue
+        else
+            cols = split(line, '\t')
+            if g == cols[2]
+                println(g, "\t", line)
+            end
         end
-    else
-        println(g)
     end
 end
