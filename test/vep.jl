@@ -76,6 +76,13 @@ for g in smOnly
             cols = split(line, '\t')
             if g == cols[2]
                 println(g, "\t", line)
+            elseif ismatch(r"-", cols[2])
+                pos = expand(cols[2])
+                for item in pos
+                    if g == item
+                        println(line)
+                    end
+                end
             end
         end
     end
