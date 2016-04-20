@@ -62,12 +62,19 @@ gl = readVEP(f1)
 sm = readVEP(f2)
 
 glOnly = setdiff(Set(gl), Set(sm))
+
+"""
+smOnly contains only variants excluding the common variants found in germline
+"""
 smOnly = setdiff(Set(sm), Set(gl))
 
 common = intersect(Set(gl), Set(sm))
 smf = open(f2)
 lines = readlines(smf)
-
+"""
+fetching the variant position based annoation for the filtered
+somatic variants
+"""
 for g in smOnly
     for line in lines
         if ismatch(r"^#", line)
