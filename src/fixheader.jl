@@ -1,5 +1,10 @@
 #!/usr/bin/env julia
 
+"""
+Fixing VCF files generated from variant calling
+to load into IGV
+"""
+
 function fixHeader(vcf=ARGS[1])
     file = open(vcf)
     lines = readlines(file)
