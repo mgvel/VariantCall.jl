@@ -1,5 +1,7 @@
 #!/usr/bin/env julia
-
+"""
+Testing code
+"""
 using VariantCall
 
 chr = ARGS[1]
