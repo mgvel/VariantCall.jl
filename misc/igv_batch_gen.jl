@@ -11,16 +11,19 @@ bamList = split(list, '\n')
 println(length(bamList)-1, " BAM files found!")
 println(length(wig))
 
-for f in wig
-    println(f)
-end
-
 for i in bamList[1:end-1]
-    for file in wig
-        ln = open(file)
-        lines = readall(ln)
+    println("new")
+    println("genome hg19")
+    println("load http://localhost:8000/bam/$i")
+    println("snapshotDirectory /home/gnanavel/Work/GBM_NCV-Roadmap/Data/TCGA/mutations/PNG/$i")
+    for file in wig[1]
+        ln = open(chomp(file))
+        lines = split(readall(ln), '\n')
         chr = split(file, '.')
-        println(i, '\t', chr[1])
+        for po in lines[3:50]
+            pos = split(po, '\t')
+            println("goto ", chr[1], ':', pos[1], '-', pos[1])
+        end
     end
 end
         #=
