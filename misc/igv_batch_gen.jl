@@ -16,7 +16,7 @@ bamList = readlines(fil2)
 
 here = pwd() # presently working directory
 
-for line in bamList[1:5]
+for line in bamList#[1:5]
     out = []
     target = chomp(line)
     bam = split(target, ',')
@@ -33,7 +33,7 @@ for line in bamList[1:5]
         ln = open(file)
         lines = readlines(ln)
         chr = split(file, '.')
-        for po in lines[3:18]
+        for po in lines[3:end]
             pos = split(po, '\t')
             position = "goto "*chr[1]*":"*pos[1]*"-"*pos[1]
             push!(out, position)
