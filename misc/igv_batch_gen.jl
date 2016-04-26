@@ -10,20 +10,23 @@ fh = ARGS[1] #      File with list of .wig file names
 file = open(fh)
 wig = readlines(file)
 
-path = "http://localhost:8000/bam/"
-list = readall(pipeline(`curl $path`, `awk '/.bam$/ {print $NF}'`))
-bamList = split(list, '\n') # List of BAM files in the tunnel
+fP = ARGS[2] # GBM-pairs.txt
+fil2 = open(fP)
+bamList = readlines(fil2)
 
 here = pwd() # presently working directory
 
-for bam in bamList#[1:10]
+for line in bamList[1:5]
     out = []
-    target = bam[1:end-4]
+    target = chomp(line)
+    bam = split(target, ',')
+    tumor, normal = bam[1], bam[2]
     rm("$here/PNG/$target", recursive=true)
     mkdir("$here/PNG/$target")  # Creating snapshot directory
     push!(out, "new")
     push!(out, "genome hg19")
-    push!(out, "load http://localhost:8000/bam/$bam,$here/somatic.wig,$here/germline.wig.tdf")
+    push!(out, "load http://localhost:8000/bam/$tumor.bam,$here/somatic.wig,$here/germline.wig.tdf,http://localhost:8000/bam/$normal.bam")
+    push!(out, "maxPanelHeight 1000")
     push!(out, "snapshotDirectory $here/PNG/$target")
     for file in wig
         file = chomp(file)
