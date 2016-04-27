@@ -21,7 +21,7 @@ for line in bamList#[1:5]
     target = chomp(line)
     bam = split(target, ',')
     tumor, normal = bam[1], bam[2]
-    rm("$here/PNG/$target", recursive=true)
+    #rm("$here/PNG/$target", recursive=true)
     mkdir("$here/PNG/$target")  # Creating snapshot directory
     push!(out, "new")
     push!(out, "genome hg19")
