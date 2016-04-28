@@ -1,16 +1,18 @@
 #!/usr/bin/env julia
 
-"""
-a tool for creating wig files from results of variant heterozygous bases.
-"""
+#"""
+##a tool for creating wig files from results of variant heterozygous bases.
+#"""
+
 include("read.jl")
 
 function vcf2wig(vcf_path= ARGS[1])
     lines = read(vcf_path)
-    println('track graphType=bar windowingFunction=none autoScale=off viewLimits=0:1')
-    chrom = ''
+    #lines = (lines)
+    println("track graphType=bar windowingFunction=none autoScale=off viewLimits=0:1")
+    chrom = " "
     value = 1
-    for line in lines
+    for line in lines[2:end]
         cols = split(chomp(line),'\t')
         chr = cols[1]
         pos = cols[2]
