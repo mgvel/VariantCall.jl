@@ -4,22 +4,41 @@
 
 using GZip
 
-include("read.jl")
-
-"""
-Read entire chromosome from input file and return the lines
-"""
-function readchr(fh=ARGS[1])
-    if ismatch(r".gz$", fh)
-        f = GZip.open(fh)
-        lines = readlines(f)
-    else
-        f = open(fh)
-        lines = readlines(fh)
-    end
-    return lines
+function read(file)
+    if ismatch(r".gz$", file)   # Gzipped .gz files
+		f = GZip.open(file)
+		lines = readlines(f)
+		close(f)
+    else   # Gzipped .vcf files
+		f = open(file)
+		lines = readlines(f)
+		close(f)
+	end
+	return lines
 end
 
+"""
+Read .wig file
+"""
+function readwig(fh=ARGS[1])
+    pos = []
+    lines = read(fh)
+    header = lines[1:2]
+    lines  = lines[3:end]
+    return header, lines
+end
+
+function readBED(bed_file=ARGS[2])
+    lines = read(bed_file)
+end
+
+header, ln = readwig()
+bed = readBED()
+
+println(length(ln))
+println(length(bed))
+
+#=
 function index(lines=readchr())
     pos = []
     #lines = readchr()
@@ -45,7 +64,7 @@ for i in test
     println(i)
 end
 
-#=
+
 function nonCoding()
 end
 =#

@@ -1,7 +1,7 @@
 #!/usr/bin/env julia
 
 #"""
-##a tool for creating wig files from results of variant heterozygous bases.
+#tool for creating wig files from results of variant heterozygous bases.
 #"""
 
 include("read.jl")
