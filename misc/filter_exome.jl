@@ -1,7 +1,6 @@
 #!/usr/bin/env julia
-# Minimal annotation about the genomic postion
-# Try to classifiy genomic position at single neucleotide resolution
-# Using EnsEMBL vep libraries
+
+# Remove variants from exonic (coding) region of the genome
 
 using GZip
 
