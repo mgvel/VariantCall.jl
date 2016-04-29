@@ -5,7 +5,8 @@
 using GZip
 using DataFrames
 
-#bed = ARGS[2]   #"Exome_region.bed"
+wigf = ARGS[1]   # chr*.wig
+bedf = ARGS[2]   # Exome_region.bed
 
 function read(file)
     if ismatch(r".gz$", file)   # Gzipped .gz files
@@ -37,62 +38,48 @@ end
 """
 Read .wig file
 """
-function readwig(fh=ARGS[1])
+function readwig(fh)
     pos = []
     lines = read(fh)
     header = lines[1:2]
     lines  = lines[3:end]
-    return header, lines
+    chr = split(chomp(header[2]), '=')
+    for line in lines
+        cols = split(line, '\t')
+        out = chr[2] * ":" * cols[1]
+        push!(pos, out)
+    end
+    unique(pos)
+    return header, pos
 end
 
-function readBED(bed_file=ARGS[2])
+function readBED(bed_file, chr::AbstractString=chr)
     pos = []
     bed = read(bed_file)
-    for line in bed
+    #println(chr, "+++++++++")
+    for line in bed#[218670:218690]
         bed = split(line, '\t')
-        chr = replace(bed[1], "chr", "")
-        start, last = bed[2], bed[3]
-        chroms = "$chr" * ":" * "$start" * "-" * "$last"
-        region = expand(chroms)
-        push!(pos, region)
+        chrm = replace(bed[1], "chr", "")
+        #println(chrm, "********")
+        if chrm == chr
+            start, last = bed[2], bed[3]
+            chroms = "$chrm" * ":" * "$start" * "-" * "$last"
+            region = expand(chroms)
+            append!(pos, region)
+        end
     end
+    pos = unique(pos)
     return pos
 end
 
-header, ln = readwig()
-bed = readBED()
+header, ln = readwig(wigf)
+bed = readBED(bedf, "Y")
 
-println(length(ln))
-for i in bed[1:15]
-    println(i)
-end
+com = intersect(ln, bed)
+println(length(ln), '\t', length(bed), '\t', length(com))
+
 #=
-function index(lines=readchr())
-    pos = []
-    #lines = readchr()
-    for line in lines
-        cols = split(line, "\t")
-        push!(pos, cols[2])
-    end
-    return pos
-end
-
-"""
-out = index()
-for i in out
-    println(i)
-end
-
-function coding()
-end
-"""
-test = readchr()
-for i in test
-    chomp(i)
-    println(i)
-end
-
-
-function nonCoding()
+for i = ln[1:20], j = bed[1:20]
+    println(i, '\t', j)
 end
 =#
