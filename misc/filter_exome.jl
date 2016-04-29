@@ -3,18 +3,35 @@
 # Remove variants from exonic (coding) region of the genome
 
 using GZip
+using DataFrames
+
+#bed = ARGS[2]   #"Exome_region.bed"
 
 function read(file)
     if ismatch(r".gz$", file)   # Gzipped .gz files
 		f = GZip.open(file)
 		lines = readlines(f)
 		close(f)
-    else   # Gzipped .vcf files
+    else
 		f = open(file)
 		lines = readlines(f)
 		close(f)
 	end
 	return lines
+end
+
+function expand(locci)
+    list = []
+    pos = split(locci, ':')
+        chr = pos[1]
+        region = split(pos[2], '-')
+        n = parse(Int64, region[1])
+        while n <= parse(Int64, region[end])
+             out = "$chr" * ":" * "$n"
+            push!(list, out)
+            n +=  1
+        end
+    return list
 end
 
 """
@@ -29,15 +46,26 @@ function readwig(fh=ARGS[1])
 end
 
 function readBED(bed_file=ARGS[2])
-    lines = read(bed_file)
+    pos = []
+    bed = read(bed_file)
+    for line in bed
+        bed = split(line, '\t')
+        chr = replace(bed[1], "chr", "")
+        start, last = bed[2], bed[3]
+        chroms = "$chr" * ":" * "$start" * "-" * "$last"
+        region = expand(chroms)
+        push!(pos, region)
+    end
+    return pos
 end
 
 header, ln = readwig()
 bed = readBED()
 
 println(length(ln))
-println(length(bed))
-
+for i in bed[1:15]
+    println(i)
+end
 #=
 function index(lines=readchr())
     pos = []
