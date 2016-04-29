@@ -56,11 +56,9 @@ end
 function readBED(bed_file, chr::AbstractString=chr)
     pos = []
     bed = read(bed_file)
-    #println(chr, "+++++++++")
-    for line in bed[218670:248690]
+    for line in bed#[218670:248690]
         bed = split(line, '\t')
         chrm = replace(bed[1], "chr", "")
-        #println(chrm, "********")
         if chrm == chr
             start, last = bed[2], bed[3]
             chroms = "$chrm" * ":" * "$start" * "-" * "$last"
@@ -76,9 +74,11 @@ header, ln = readwig(wigf)
 bed = readBED(bedf, "Y")
 
 com = intersect(ln, bed)
-println(length(ln), '\t', length(bed), '\t', length(com))
+
+println(length(ln), '\t', length(bed))#, '\t', length(com))
 
 
-for i = ln[1:20], j = bed[1:20]
-    println(i, '\t', j)
+
+for i in com #, j = bed[1:200]
+    println(i)#, '\t', j)
 end
