@@ -57,7 +57,7 @@ function readBED(bed_file, chr::AbstractString=chr)
     pos = []
     bed = read(bed_file)
     #println(chr, "+++++++++")
-    for line in bed#[218670:218690]
+    for line in bed[218670:248690]
         bed = split(line, '\t')
         chrm = replace(bed[1], "chr", "")
         #println(chrm, "********")
@@ -78,8 +78,7 @@ bed = readBED(bedf, "Y")
 com = intersect(ln, bed)
 println(length(ln), '\t', length(bed), '\t', length(com))
 
-#=
+
 for i = ln[1:20], j = bed[1:20]
     println(i, '\t', j)
 end
-=#
