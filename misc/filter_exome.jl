@@ -77,7 +77,7 @@ bed = readBED(bedf, chr)
 #com = intersect(ln, bed)
 ncDNA = setdiff(Set(ln), Set(bed))
 
-println(length(ln), '\t', length(bed)), '\t', chr)
+println(length(ln), '\t', length(bed), '\t', chr)
 
 
 for i in ncDNA #, j = bed[1:200]
