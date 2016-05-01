@@ -34,12 +34,12 @@ println(length(samples), length(split(data[1])[5:end]))
 
 for (pos, value) in enumerate(array[9411207:9412000])
     alts = zeros(length(samples))
-    print("pos", pos,"\t")
+    print("pos-", pos, "\t")
     for line in data
         content = split(line)[5:end]
         site    = split(line)[2]
         if pos == site
-            print(alts)
+            println(alts)
         else
             for del in content
                 alts = parse(Int64, split(del, ':')[1])
@@ -49,7 +49,7 @@ for (pos, value) in enumerate(array[9411207:9412000])
                     print(0,"\t")
                 end
             end
+		println()		
         end
     end
-    println("++++++\n")
 end
