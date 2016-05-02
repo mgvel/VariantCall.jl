@@ -49,14 +49,15 @@ function readwig(fh)
         out = chr[2] * ":" * cols[1]
         push!(pos, out)
     end
+    chr = chr[2]
     unique(pos)
-    return header, pos
+    return chr, header, pos
 end
 
 function readBED(bed_file, chr::AbstractString=chr)
     pos = []
     bed = read(bed_file)
-    for line in bed#[218670:248690]
+    for line in bed[5265:5999]
         bed = split(line, '\t')
         chrm = replace(bed[1], "chr", "")
         if chrm == chr
@@ -70,15 +71,15 @@ function readBED(bed_file, chr::AbstractString=chr)
     return pos
 end
 
-header, ln = readwig(wigf)
-bed = readBED(bedf, "Y")
+chr, header, ln = readwig(wigf)
+bed = readBED(bedf, chr)
 
-com = intersect(ln, bed)
+#com = intersect(ln, bed)
+ncDNA = setdiff(Set(ln), Set(bed))
 
-println(length(ln), '\t', length(bed))#, '\t', length(com))
+println(length(ln), '\t', length(bed)), '\t', chr)
 
 
-
-for i in com #, j = bed[1:200]
+for i in ncDNA #, j = bed[1:200]
     println(i)#, '\t', j)
 end
