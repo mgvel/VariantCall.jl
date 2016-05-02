@@ -1,12 +1,11 @@
 #!/usr/bin/env julia
 
-# Remove variants from exonic (coding) region of the genome
+# Remove variants from exonic (coding)/masked low resolution mapping regions of the genome
 
 using GZip
-using DataFrames
 
-wigf = ARGS[1]   # chr*.wig
-bedf = ARGS[2]   # Exome_region.bed
+wigf = ARGS[1]   # .wig file
+bedf = ARGS[2]   # .bed file
 
 function read(file)
     if ismatch(r".gz$", file)   # Gzipped .gz files
@@ -71,15 +70,33 @@ function readBED(bed_file, chr::AbstractString=chr)
     return pos
 end
 
+"""
 chr, header, ln = readwig(wigf)
 bed = readBED(bedf, chr)
-
 #com = intersect(ln, bed)
 ncDNA = setdiff(Set(ln), Set(bed))
+"""
 
-println(length(ln), '\t', length(bed), '\t', chr)
+function printWIG(wigf, bedf)
+    chr, header, ln = readwig(wigf)
+    bed = readBED(bedf, chr)
+    ncDNA = sort(setdiff(Set(ln), Set(bed)))
+    
+    for line in header
+        println(chomp(line))
+    end
+    
+   for i in ncDNA
+       pattern = chr * ":"
+       println(replace(i, pattern, ""), ' ','1')
+   end
+end
 
+printWIG(wigf, bedf)
 
+#println(length(ln), '\t', length(bed), '\t', chr)
+"""
 for i in ncDNA #, j = bed[1:200]
     println(i)#, '\t', j)
 end
+"""
