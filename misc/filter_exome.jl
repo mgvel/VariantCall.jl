@@ -44,7 +44,7 @@ function readwig(fh)
     lines  = lines[3:end]
     chr = split(chomp(header[2]), '=')
     for line in lines
-        cols = split(line, '\t')
+        cols = split(line, ' ')
         out = chr[2] * ":" * cols[1]
         push!(pos, out)
     end
