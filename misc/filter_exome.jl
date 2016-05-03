@@ -74,7 +74,7 @@ end
 function printWIG(wigf, bedf)
     chr, header, ln = readwig(wigf)
     bed = readBED(bedf, chr)
-    ncDNA = sort(setdiff(Set(ln), Set(bed)))
+    ncDNA = setdiff(Set(ln), Set(bed))
 
     for line in header
         println(chomp(line))
