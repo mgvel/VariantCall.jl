@@ -25,15 +25,14 @@ function chrArray(sizef, chrf)
     array = "chr" *  chr
     array = zeros(sizeD[chr])
     return array, names, data
-
 end
 
 array, samples, data = chrArray(sizef, chrf)
 println(length(samples), length(split(data[1])[5:end]))
 
-matrix = Array{Int}(length(array), length(samples))
+matrix = Array{Int}(10, length(samples))
 
-for pos in array[1:10]
+for (pos, value) in enumerate(array[1:10])
     sample = []
     for del in split(data[1])[5:end]
         alts = parse(Int64, split(del, ':')[1])
@@ -43,9 +42,11 @@ for pos in array[1:10]
             push!(sample, 0)
         end
     end
-    matrix[pos] = sample
+    println(length(sample))
+    #matrix[pos] = sample
 end
-println(ndims(matrix))
+
+#println(ndims(matrix))
 
 #=
 println(length(samples))
