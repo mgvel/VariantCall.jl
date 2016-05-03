@@ -1,7 +1,8 @@
 #!/usr/bin/env julia
 
-# Remove variants from exonic (coding)/masked low resolution mapping regions of the genome
-
+"""
+Remove variants from exonic (coding) or masked low resolution mapping regions of the genome
+"""
 using GZip
 
 wigf = ARGS[1]   # .wig file
@@ -20,6 +21,14 @@ function read(file)
 	return lines
 end
 
+"""
+Expanding the dashed intervals into single nucleotide positions
+example:
+Y:2688071-2688073 =>
+                    Y:2688071
+                    Y:2688072
+                    Y:2688073
+"""
 function expand(locci)
     list = []
     pos = split(locci, ':')
@@ -36,6 +45,12 @@ end
 
 """
 Read .wig file
+
+track graphType=bar windowingFunction=none autoScale=off viewLimits=0:1
+variableStep chrom=Y
+2649597	1
+2649610	1
+2649664	1
 """
 function readwig(fh)
     pos = []
@@ -53,6 +68,13 @@ function readwig(fh)
     return chr, header, pos
 end
 
+"""
+Read .bed file
+
+chr1	67000041	67000051	NM_032291_cds_0_0_chr1_67000042_f	0	+
+chr1	67091529	67091593	NM_032291_cds_1_0_chr1_67091530_f	0	+
+chr1	67098752	67098777	NM_032291_cds_2_0_chr1_67098753_f	0	+
+"""
 function readBED(bed_file, chr::AbstractString=chr)
     pos = []
     bed = read(bed_file)
@@ -69,7 +91,6 @@ function readBED(bed_file, chr::AbstractString=chr)
     pos = unique(pos)
     return pos
 end
-
 
 function printWIG(wigf, bedf)
     chr, header, ln = readwig(wigf)
