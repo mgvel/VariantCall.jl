@@ -82,7 +82,7 @@ function printWIG(wigf, bedf)
 
    for i in ncDNA
        pattern = chr * ":"
-       println(replace(i, pattern, ""), ' ','1')
+       println(replace(i, pattern, ""), ' ',"1 ++++++")
    end
 end
 
