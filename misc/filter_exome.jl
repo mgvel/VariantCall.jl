@@ -70,22 +70,16 @@ function readBED(bed_file, chr::AbstractString=chr)
     return pos
 end
 
-"""
-chr, header, ln = readwig(wigf)
-bed = readBED(bedf, chr)
-#com = intersect(ln, bed)
-ncDNA = setdiff(Set(ln), Set(bed))
-"""
 
 function printWIG(wigf, bedf)
     chr, header, ln = readwig(wigf)
     bed = readBED(bedf, chr)
     ncDNA = sort(setdiff(Set(ln), Set(bed)))
-    
+
     for line in header
         println(chomp(line))
     end
-    
+
    for i in ncDNA
        pattern = chr * ":"
        println(replace(i, pattern, ""), ' ','1')
@@ -93,10 +87,3 @@ function printWIG(wigf, bedf)
 end
 
 printWIG(wigf, bedf)
-
-#println(length(ln), '\t', length(bed), '\t', chr)
-"""
-for i in ncDNA #, j = bed[1:200]
-    println(i)#, '\t', j)
-end
-"""
