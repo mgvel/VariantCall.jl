@@ -49,7 +49,7 @@ for (pos, value) in enumerate(array[9411207:9412000])
                     print(0,"\t")
                 end
             end
-		println()		
+		println()
         end
     end
 end
