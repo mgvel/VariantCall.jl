@@ -30,25 +30,26 @@ end
 array, samples, data = chrArray(sizef, chrf)
 println(length(samples), length(split(data[1])[5:end]))
 
-matrix = Array{Int}(10, length(samples))
+#matrix = Array{Int}(10, length(samples))
 
-for (pos, value) in enumerate(array[1:10])
-    sample = []
-    for del in split(data[1])[5:end]
-        alts = parse(Int64, split(del, ':')[1])
-        if alts >= 2                               # Number of alternative reads
-            push!(sample, 1)
+for (pos, value) in enumerate(array[9411207:9412000])
+    alts = zeros(length(samples))
+    print("pos", pos,"\t")
+    for line in data
+        content = split(line)[5:end]
+        site    = split(line)[2]
+        if pos == site
+            print(alts)
         else
-            push!(sample, 0)
+            for del in content
+                alts = parse(Int64, split(del, ':')[1])
+                if alts >= 2                # Number of alternative    reads
+                    print(1,"\t")
+                else
+                    print(0,"\t")
+                end
+            end
         end
     end
-    println(length(sample))
-    #matrix[pos] = sample
+    println("++++++\n")
 end
-
-#println(ndims(matrix))
-
-#=
-println(length(samples))
-println(chr)
-=#
