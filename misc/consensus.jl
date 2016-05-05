@@ -1,15 +1,23 @@
 #!/usr/bin/env julia
 
 """
-Consensus checking for variant positions
+Consensus checking for variant positions across samples
 """
+file = ARGS[1] # vcf /vcf.gz file
+
 include("../src/read.jl")
 
-file = ARGS[1]
 vcf = read(file)
-names = split(vcf[1])[5:end]
-header = "Position" * " Consensus" * "$names"
-println(header)
+header = []
+names = split(vcf[1])[5:end]  # assumes first line as header
+push!(header, "Position")
+push!(header, "Consensus")
+append!(header, names)
+
+for col in header
+	print(col, '\t')
+end
+println()
 
 for line in vcf[2:end]
 	arr =[]
@@ -26,11 +34,10 @@ for line in vcf[2:end]
 		end
 	end
 	consensus = (sum(alts)/length(alts))*100
-	print(consensus, "% \t")
+	@printf("%6.3f", consensus)
 	#append!(arr, alts)
 	for i in alts
-		print(i, '\t')
+		print('\t', i)
 	end
 	println()
 end
-
