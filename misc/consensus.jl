@@ -1,5 +1,8 @@
 #!/usr/bin/env julia
 
+"""
+Consensus checking for variant positions
+"""
 include("../src/read.jl")
 
 file = ARGS[1]
@@ -30,3 +33,4 @@ for line in vcf[2:end]
 	end
 	println()
 end
+
