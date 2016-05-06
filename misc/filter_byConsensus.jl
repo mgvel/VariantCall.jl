@@ -13,7 +13,7 @@ function readConsensus(cons)
 		cols = split(line, '\t')
 		percent = parse(Float64, cols[2])
 		if percent >= 10
-			push!(conslist, cols[1])
+			push!(conslist, parse(Int, cols[1]))
 		end
 	end
 	return conslist
@@ -24,9 +24,7 @@ conslist = readConsensus(cons)
 function readVCF(vcf_path, conslist)
 	lines = read(vcf_path)
 	for pos = conslist[1:end], line = lines[2:end]
-		#pos = parse(Int, pos)
 		snp = parse(Int, split(line, '\t')[2])
-		
 		if pos == snp
 			println(line)
 		end
@@ -36,5 +34,3 @@ end
 readVCF(vcf, conslist)
 
 #println(length(conse))
-
-
