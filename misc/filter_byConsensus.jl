@@ -33,4 +33,4 @@ end
 
 readVCF(vcf, conslist)
 
-#println(length(conse))
+println(length(conse))
