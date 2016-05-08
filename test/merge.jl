@@ -1,6 +1,6 @@
 #!/usr/bin/env julia
 
-# FIXME I AM SLOW
+# FIXME I AM VERY SLOW
 
 include("read.jl")
 
