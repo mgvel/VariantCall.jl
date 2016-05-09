@@ -8,7 +8,6 @@ include("../src/read.jl")
 function readConsensus(cons)
 	conslist = []
 	lines = read(cons)
-	header = lines[1]
 	for line in lines[2:end]
 		cols = split(line, '\t')
 		percent = parse(Float64, cols[2])
@@ -23,6 +22,8 @@ conslist = readConsensus(cons)
 
 function readVCF(vcf_path, conslist)
 	lines = read(vcf_path)
+	println(lines[1])
+	
 	for pos = conslist[1:end], line = lines[2:end]
 		snp = parse(Int, split(line, '\t')[2])
 		if pos == snp
@@ -33,4 +34,3 @@ end
 
 readVCF(vcf, conslist)
 
-#println(length(conse))
