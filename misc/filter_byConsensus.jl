@@ -26,14 +26,14 @@ end
 conslist = readConsensus(cons)
 
 """
-Reading VCF files and comparing each position with positions 
+Reading VCF files and comparing each position with positions
 retrieved from previous function checking for consensus
 and returning filtered variants in .vcf format
 """
 function readVCF(vcf_path, conslist)
 	lines = read(vcf_path)
 	println(lines[1])
-	
+
 	for pos = conslist[1:end], line = lines[2:end]
 		snp = parse(Int, split(line, '\t')[2])
 		if pos == snp
