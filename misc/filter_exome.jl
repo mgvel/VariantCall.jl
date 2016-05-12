@@ -1,9 +1,10 @@
 #!/usr/bin/env julia
 
+using GZip
+
 """
 Remove variants from exonic (coding) or masked low resolution mapping regions of the genome
 """
-using GZip
 
 wigf = ARGS[1]   # .wig file
 bedf = ARGS[2]   # .bed file
@@ -26,6 +27,7 @@ Expanding the dashed intervals into single nucleotide positions
 example:
 Y:2688071-2688073 =>
                     Y:2688071
+
                     Y:2688072
                     Y:2688073
 """
