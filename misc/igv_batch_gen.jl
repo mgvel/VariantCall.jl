@@ -25,7 +25,7 @@ for line in bamList#[1:5]
     mkdir("$here/PNG/$target")  # Creating snapshot directory
     push!(out, "new")
     push!(out, "genome hg19")
-    push!(out, "load http://localhost:8000/bam/$tumor.bam,$here/somatic.wig,$here/germline.wig.tdf,http://localhost:8000/bam/$normal.bam")
+    push!(out, "load http://localhost:8000/bam/$tumor.bam,$here/sm10p.wig,$here/germline.wig.tdf,http://localhost:8000/bam/$normal.bam")
     push!(out, "maxPanelHeight 1000")
     push!(out, "snapshotDirectory $here/PNG/$target")
     for file in wig

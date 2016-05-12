@@ -1,6 +1,7 @@
 #!/usr/bin/env julia
 """
-Testing code
+Testing code for other scripts
+
 """
 using VariantCall
 
