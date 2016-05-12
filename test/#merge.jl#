@@ -1,7 +1,5 @@
 #!/usr/bin/env julia
 
-# FIXME I AM VERY SLOW
-
 include("read.jl")
 
 function extract(paths = ARGS[1:end])
@@ -67,3 +65,4 @@ while ln <=lenght(data)
 	println(data[ln])
 	ln += 1
 end
+
