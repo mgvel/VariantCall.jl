@@ -69,23 +69,20 @@ function filterVCF(vcf_path, exomf)
 	exomepos = readBED(exomf, chr)
 	println(lines[1])
 
-
 	for line = lines[2:end]
         snp = parse(Int, split(line, '\t')[2])
         push!(vars, snp)
     end
     unique(vars)
+
     intronic = setdiff(Set(vars), Set(exomepos))
-
-    println(length(intronic))
-
     for pos = exomepos[1:end], line = lines[2:end]
         cols = split(line, '\t')
         if pos == cols[2]
+            println(cols[2], '\t', pos)
             println(line)
         end
     end
-
 end
 
 filterVCF(vcf, exomf)
