@@ -27,7 +27,6 @@ Expanding the dashed intervals into single nucleotide positions
 example:
 Y:2688071-2688073 =>
                     Y:2688071
-
                     Y:2688072
                     Y:2688073
 """
