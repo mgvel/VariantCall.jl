@@ -38,7 +38,12 @@ function expand(locci)
     return list
 end
 
-function readBED(bed_file, chr::AbstractString=chr)
+function getchr(records=read(vcf))
+    chr = split(records[5], '\t')[1]
+	return chr
+end
+
+function readBED(bed_file, chr::AbstractString=getchr())
     pos = []
     bed = read(bed_file)
     for line in bed
@@ -55,8 +60,28 @@ function readBED(bed_file, chr::AbstractString=chr)
     return pos
 end
 
-#exompos = readBED(exomf)
+function checkExome(vcf_line, exomf=exomf)
+    exompos = readBED(exomf)
+    snp = split(vcf_line, '\t')[2]
+    out = in(snp, exompos)
+    return out
+end
 
+
+function filterVCF(vcf_path)
+	lines = read(vcf_path)
+	println(chomp(lines[1]))
+	for line = lines[2:end]
+		exomic = checkExome(line)
+		if exomic == true
+            continue
+        else
+			print(line)
+		end
+	end
+end
+
+#=
 """
 Reading VCF files and comparing each position with positions
 retrieved from previous function checking for exomic region
@@ -84,5 +109,5 @@ function filterVCF(vcf_path, exomf)
         end
     end
 end
-
-filterVCF(vcf, exomf)
+=#
+filterVCF(vcf)
