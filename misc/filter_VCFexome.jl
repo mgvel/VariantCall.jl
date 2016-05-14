@@ -1,5 +1,7 @@
 #!/usr/bin/env julia
 
+module filterExonic
+
 using GZip
 
 exomf = ARGS[1] # Exome file e.g: Exome_region.bed
@@ -77,3 +79,4 @@ function filterExonic(vcf_path)
 end
 
 filterExonic(vcf)
+end
