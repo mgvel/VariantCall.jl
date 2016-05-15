@@ -31,7 +31,7 @@ function filterVCF(vcf_path)
 	println(chomp(lines[1]))
 	for line = lines[2:end]
 		cons = consensus(line)
-		# alteast 3 reads with mutaion in 10% of thae samples
+		# minimum 3 reads having mutation in at least 10% of thae samples
 		if cons >= 10
 			print(line)
 		end
