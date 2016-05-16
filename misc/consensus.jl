@@ -1,7 +1,7 @@
 #!/usr/bin/env julia
 
 """
-Consensus checking for variant positions across samples
+	Consensus checking for variant positions across samples
 """
 file = ARGS[1] # .vcf/.vcf.gz file
 include("../src/read.jl")
