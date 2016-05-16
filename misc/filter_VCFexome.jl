@@ -1,12 +1,9 @@
 #!/usr/bin/env julia
 
-module filterExonic
-
 using GZip
 
 exomf = ARGS[1] # Exome file e.g: Exome_region.bed
 vcf  = ARGS[2] # Variant Calling file e.g: chr3.vcf.gz
-
 
 function read(file)
     if ismatch(r".gz$", file)   # Gzipped .gz files
@@ -79,4 +76,3 @@ function filterExonic(vcf_path)
 end
 
 filterExonic(vcf)
-end
