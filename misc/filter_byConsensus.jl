@@ -13,7 +13,7 @@ function consensus(vcf_line)
 	alts = []
 	for sample in cols[5:end]
 		altRead = parse(Int64, split(sample, ':')[1])
-		if altRead >= 10
+		if altRead >= 5
 			push!(alts, 1)
 		else
 			push!(alts, 0)
