@@ -13,7 +13,7 @@ function consensus(vcf_line)
 	alts = []
 	for sample in cols[5:end]
 		altRead = parse(Int64, split(sample, ':')[1])
-		if altRead >= 3
+		if altRead >= 10
 			push!(alts, 1)
 		else
 			push!(alts, 0)
@@ -32,7 +32,7 @@ function filterVCF(vcf_path)
 	for line = lines[2:end]
 		cons = consensus(line)
 		# minimum 3 reads having mutation in at least 10% of thae samples
-		if cons >= 10
+		if cons >= 50
 			print(line)
 		end
 	end
