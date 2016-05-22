@@ -8,10 +8,10 @@ using VariantCall
 chr = ARGS[1]
 inputf = ARGS[2]
 
-#line = VariantCall.read(inputf)
+line = VariantCall.read(inputf)
 record = VariantCall.records(inputf)
-#println(join(record,"\n"))
-#print(join(record[1:15]), "\n")
+println(join(record,"\n"))
+print(join(record[1:15]), "\n")
 
 #inf = VariantCall.info(record)
 #aa = VariantCall.infoAA(record)
