@@ -193,7 +193,8 @@ function uniqalts(records)
 	alt = []
 	for line in records
 		tmp = split(line, "\t")
-		# if ID column present
+		#
+		 if ID column present
 		if ismatch(r"[\d]", tmp[3])
 			#$tmp[5] => ALT
 			push!(alt, tmp[5])
