@@ -1,4 +1,4 @@
-#!/usr/bin/env julia
+#!/usr/bin/julia
 
 # FIXME I AM VERY SLOW
 

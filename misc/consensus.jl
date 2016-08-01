@@ -31,7 +31,8 @@ for line in vcf[2:end]
 			push!(alts, 0)
 		end
 	end
-	consensus = (sum(alts)/length(alts))*100
+
+
 	@printf("%6.3f", consensus)
 	for i in alts
 		print('\t', i)
